@@ -9,14 +9,18 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import CarouselSlide from './CarouselSlide';
 
+
+import book from "../../assets/images/book.png";
+import item from "../../assets/images/technology.png";
+import item1 from "../../assets/images/fashion.png";
+
+
 const HeroCarousel = () => {
   return (
     <>
       <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         pagination={{
@@ -27,13 +31,13 @@ const HeroCarousel = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          <CarouselSlide />
+          <CarouselSlide title={"Hi, There"} subtitle={"Rou sdfsd"} image={book} />
         </SwiperSlide>
         <SwiperSlide>
-          <CarouselSlide />
+          <CarouselSlide title={"Hi, There"} subtitle={"Rou sdfsd"} image={item} />
         </SwiperSlide>
         <SwiperSlide>
-          <CarouselSlide />
+          <CarouselSlide title={"Hi, There"} subtitle={"Rou sdfsd"} image={item1} />
         </SwiperSlide>
       </Swiper>
     </>
