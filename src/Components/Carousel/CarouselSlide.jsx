@@ -5,7 +5,7 @@ import bg_img from "../../assets/images/banner-image-bg.jpg";
 const CarouselSlide = () => {
   return (
     <section 
-      className="w-full h-[650px] flex items-center justify-center"
+      className="w-full h-[650px] flex items-center justify-center bg-cover bg-center"
       style={{backgroundImage: `url(${bg_img})`}}
     >
       <div className="max-w-6xl px-8 flex items-center justify-between">
