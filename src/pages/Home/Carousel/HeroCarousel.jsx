@@ -10,9 +10,9 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import CarouselSlide from './CarouselSlide';
 
 
-import book from "../../assets/images/book.png";
-import technology from "../../assets/images/technology.png";
-import fashion from "../../assets/images/fashion.png";
+import book from "../../../assets/images/book.png";
+import technology from "../../../assets/images/technology.png";
+import fashion from "../../../assets/images/fashion.png";
 
 
 const HeroCarousel = () => {
