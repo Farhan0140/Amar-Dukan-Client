@@ -1,5 +1,5 @@
 
-const FilterSection = ({ priceRange, HandlePriceRange, categories, handleCategoryChange, handleSearchProducts }) => {
+const FilterSection = ({ priceRange, HandlePriceRange, categories, handleCategoryChange, handleSearchProducts, handleOrderProducts }) => {
   return (
     <div className="my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Price Range */}
@@ -96,10 +96,13 @@ const FilterSection = ({ priceRange, HandlePriceRange, categories, handleCategor
         <label className='block text-sm font-medium text-gray-700 mb-2'>
           Sort by Price
         </label>
-        <select className='w-full p-2 border rounded-md'>
-          <option>Default</option>
-          <option value="asc">Price: Low to High</option>
-          <option value="desc">Price: High to Low</option>
+        <select 
+          onChange={(e) => handleOrderProducts(e.target.value)}
+          className='w-full p-2 border rounded-md'
+        >
+          <option value="">Default</option>
+          <option value="price">Price: Low to High</option>
+          <option value="-price">Price: High to Low</option>
         </select>
       </div>
     </div>
