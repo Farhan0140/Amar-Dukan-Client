@@ -1,2 +1,11 @@
+@font-face {
+  font-family: biscotti;
+  src: url("../src/assets/Fonts/biscotti.otf");
+}
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --font-biscotti: biscotti, "sans-serif"
+}
