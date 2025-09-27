@@ -10,7 +10,8 @@ const ShopPage = () => {
   const [PriceRange, setPriceRange] = useState([0, 1000]);
   const categories = useFetchCategories();
   const [SelectedCategory, setSelectedCategory] = useState("");
-  const {Products, IsLoading, TotalPages} = useFetchProducts( CurrentPage, PriceRange, SelectedCategory );
+  const [SearchProducts, setSearchProducts] = useState("");
+  const {Products, IsLoading, TotalPages} = useFetchProducts( CurrentPage, PriceRange, SelectedCategory, SearchProducts );
 
   const handlePriceRange = ( index, value ) => {
     setPriceRange((prev) => {
@@ -31,6 +32,7 @@ const ShopPage = () => {
         HandlePriceRange={handlePriceRange} 
         categories={categories}
         handleCategoryChange={setSelectedCategory}
+        handleSearchProducts={setSearchProducts}
       />
       <ShopItems items={Products} isLoading={IsLoading} />
       <Pagination 

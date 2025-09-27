@@ -1,5 +1,5 @@
 
-const FilterSection = ({ priceRange, HandlePriceRange, categories, handleCategoryChange }) => {
+const FilterSection = ({ priceRange, HandlePriceRange, categories, handleCategoryChange, handleSearchProducts }) => {
   return (
     <div className="my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Price Range */}
@@ -85,7 +85,8 @@ const FilterSection = ({ priceRange, HandlePriceRange, categories, handleCategor
         </label>
         <input 
           type="text"
-          placeholder='Search Books...'
+          onChange={(e) => handleSearchProducts(e.target.value)}
+          placeholder='name or description...'
           className='w-full p-2 border rounded-md'
         />
       </div>
