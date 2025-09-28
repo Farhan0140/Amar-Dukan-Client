@@ -10,7 +10,7 @@ const Category = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    apiClient.get("/categories/")
+    apiClient.get("/api/v1/categories/")
     .then(res => setCategories(res.data))
     .catch((err) => setError(err.message))
     .finally(() => setIsLoading(false))

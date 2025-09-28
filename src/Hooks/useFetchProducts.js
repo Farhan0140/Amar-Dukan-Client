@@ -14,7 +14,7 @@ const useFetchProducts = ( CurrentPage, PriceRange, SelectedCategory, SearchProd
       
       try {
 
-        const url = `/products/?price__gt=${PriceRange[0]}&price__lt=${PriceRange[1]}&page=${CurrentPage}&category_id=${SelectedCategory}&search=${SearchProducts}&ordering=${OrderProducts}`;
+        const url = `/api/v1/products/?price__gt=${PriceRange[0]}&price__lt=${PriceRange[1]}&page=${CurrentPage}&category_id=${SelectedCategory}&search=${SearchProducts}&ordering=${OrderProducts}`;
         const response = await apiClient.get(url);
         const data = await response.data;
 
