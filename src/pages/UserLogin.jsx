@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+
+import useAuthContext from "../Hooks/useAuthContext";
 
 
 const UserLogin = () => {
 
-  const {loginUser} = useContext(AuthContext);
+  const {loginUser} = useAuthContext();
 
   return (
     <div>

@@ -1,22 +1,14 @@
 import { createContext } from "react";
-import axios from "axios";
+import useAuth from "../Hooks/useAuth";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-  // For Login
-  const loginUser = async ( email, password ) => {
-    const response = await axios.post("https://amar-dukan.vercel.app/auth/jwt/create/", {
-      email: email,
-      password: password,
-    });
-
-    console.log(response.data);
-  };
+  const allContext = useAuth()
 
   return (
-    <AuthContext.Provider value={{loginUser}}>
+    <AuthContext.Provider value={allContext}>
       {children}
     </AuthContext.Provider>
   )
