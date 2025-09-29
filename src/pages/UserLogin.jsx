@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuthContext from "../Hooks/useAuthContext";
+import { GiEating } from "react-icons/gi";
+import { useEffect } from "react";
 
 
 const UserLogin = () => {
@@ -11,10 +13,23 @@ const UserLogin = () => {
     formState: {errors}
   } = useForm()
 
-  const {loginUser, loginError, isLoading} = useAuthContext();
+  const {user, loginUser, loginError, isLoading} = useAuthContext();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(user) {
+      navigate("/dashboard")
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const onSubmit = (data) => {
-    loginUser(data);
+    try {
+      loginUser(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -65,7 +80,11 @@ const UserLogin = () => {
               }
             </div>
 
-            <button type="submit" className="btn btn-primary w-full">
+            <button 
+              type="submit" 
+              className="btn btn-primary w-full"
+              disabled={isLoading}
+            >
               {
                 isLoading ? <span className="loading loading-spinner loading-lg"></span> : "Login"
               }
