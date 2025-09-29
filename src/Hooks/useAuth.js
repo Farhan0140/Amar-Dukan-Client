@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
 
@@ -12,22 +12,54 @@ const useAuth = () => {
   }
 
   const [authToken, setAuthToken] = useState( getToken() );
+  const [loginError, setLoginError] = useState("");
+  
 
+  useEffect(() => {
+    if (authToken) {
+      fetchUserProfile();
+    }
+  }, [authToken]);
+
+  // Fetch User
+  const fetchUserProfile = async () => {
+    try {
+      
+      const response = await apiClient.get("/auth/users/me/", {
+        headers: { Authorization: `JWT ${authToken?.access}` }
+      });
+      setUser(response.data);
+
+    } catch ( error ) {
+      console.log("Fetching User Error", error);
+    }
+  }
   
 
   // For Login
-  const loginUser = async ( email, password ) => {
-    const response = await apiClient.post("/auth/jwt/create/", {
-      email: email,
-      password: password,
-    });
 
-    console.log(response.data);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const loginUser = async ( data ) => {
+    setIsLoading(true);
+
+    try {
+      const response = await apiClient.post("/auth/jwt/create/", data);
+      setAuthToken(response.data);
+      localStorage.setItem("authTokens", JSON.stringify(response.data));
+      setLoginError("");
+    } catch ( errors ) {
+      setLoginError(errors?.response.data.detail);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return {
     user,
     loginUser,
+    loginError,
+    isLoading,
   }
 
 }
