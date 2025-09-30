@@ -6,6 +6,7 @@ import UserLogin from "../pages/UserLogin";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../Components/PrivateRoute";
 import UserRegistration from "../pages/UserRegistration";
+import ActivateAccount from "../Components/Registration/activateAccount";
 
 const AppRoutes = () => {
   return (
@@ -15,6 +16,8 @@ const AppRoutes = () => {
         <Route path="shop" element={<Shop />} />
         <Route path="sign-in" element={<UserLogin />} />
         <Route path="sign-up" element={<UserRegistration />} />
+
+        <Route path="activate/:uid/:token" element={<ActivateAccount />} />
 
         <Route 
           path="dashboard" 

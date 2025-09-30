@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { CgArrowLongRight } from "react-icons/cg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuthContext from "../Hooks/useAuthContext";
+import { useState } from "react";
 
 
 const UserRegistration = () => {
@@ -13,15 +12,29 @@ const UserRegistration = () => {
     formState: {errors},
   } = useForm();
 
+  const [registerErrors, setRegisterErrors] = useState({});
+  const [message, setMessage] = useState("");
 
-  const {registerUser, registerErrors, isLoading} = useAuthContext()
+
+  const {registerUser, isLoading} = useAuthContext()
 
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const onSubmit = (data) => {
-    registerUser(data);
+  const navigate = useNavigate()
+
+  const onSubmit = async (data) => {
+    const response = await registerUser(data);
+
+    if(response.success) {
+
+      setMessage(response.message);
+      setTimeout(() => navigate("/sign-in"), 3000);
+
+    } else {
+      setRegisterErrors(response.error)
+    }
   }
 
   return (
@@ -78,9 +91,8 @@ const UserRegistration = () => {
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                className="input input-bordered w-full my-3 focus:border-none"
+                className={`input input-bordered w-full my-3 focus:border-none ${errors.email || registerErrors?.email ? "border-red-600": ""}`}
                 {...register("email", {required:  "* This Field is Required"})}
-                onChange={() => {registerErrors.email = []}}
               />
               {
                 errors.email && (
@@ -183,15 +195,26 @@ const UserRegistration = () => {
               disabled={isLoading || password !== confirmPassword}
             >
               {
-                isLoading ? <span className="loading loading-spinner loading-lg"></span> : "Login"
+                isLoading ? <span className="loading loading-spinner loading-lg my-2"></span> : "Sign Up"
               }
             </button>
+
+            {
+              message.length > 0 && (
+                <div role="alert" className="alert alert-success">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{message}</span>
+                </div>
+              )
+            }
           </form>
 
           <div className="text-center mt-4">
             <p className="text-base-content/70">
               Already have an account?{" "}
-              <Link to="/login" className="link link-primary">
+              <Link to="/sign-in" className="link link-primary">
                 Sign in
               </Link>
             </p>

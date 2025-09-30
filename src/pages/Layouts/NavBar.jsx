@@ -3,7 +3,7 @@ import useAuthContext from "../../Hooks/useAuthContext";
 
 const NavBar = () => {
 
-  const {user} = useAuthContext();
+  const {user, logoutUser} = useAuthContext();
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -87,7 +87,7 @@ const NavBar = () => {
                     </a>
                   </li>
                   <li><a>Settings</a></li>
-                  <li><a>Logout</a></li>
+                  <li><button onClick={logoutUser}>Logout</button></li>
                 </ul>
               </div>
             </div>

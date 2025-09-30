@@ -36,25 +36,25 @@ const useAuth = () => {
   }
 
   // For Registration 
-  const [registerErrors, setRegisterErrors] = useState({})
 
   const registerUser = async (data) => {
     setIsLoading(true);
     try {
-      const response = await apiClient.post("/auth/users/", {
+      await apiClient.post("/auth/users/", {
         first_name: data.first_name,
         last_name: data.last_name,
         email: data.email,
-        phone: data.phone,
+        phone: data.phone_number,
         address: data.address,
         password: data.password
       });
-      console.log(response);
+      return {success: true, message: "Sign-Up successfully Complete,\nPlease Check your mail to Confirm registration"};
+    
     } catch ( error ) {
-      setRegisterErrors(error.response?.data);
-      // console.log(error.response.data);
-      // console.log(error.response.data.email[0]);
-      // console.log(error.response.data.password[0]);
+      // if( error.response && error.response.data ) {
+      //   const errorMessage = Object.values(error.response.data).flat().join("\n");
+      // }
+      return {success:false, error:error.response.data};
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +62,6 @@ const useAuth = () => {
   
 
   // For Login
-
   const [isLoading, setIsLoading] = useState(false);
 
   const loginUser = async ( data ) => {
@@ -80,13 +79,21 @@ const useAuth = () => {
     }
   };
 
+
+  // For Log-Out 
+  const logoutUser = () => {
+    setAuthToken(null);
+    setUser(null);
+    localStorage.removeItem("authTokens");
+  }
+
   return {
     user,
     loginUser,
     loginError,
     isLoading,
     registerUser,
-    registerErrors,
+    logoutUser,
   }
 
 }
