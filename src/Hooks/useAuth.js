@@ -34,6 +34,31 @@ const useAuth = () => {
       console.log("Fetching User Error", error);
     }
   }
+
+  // For Registration 
+  const [registerErrors, setRegisterErrors] = useState({})
+
+  const registerUser = async (data) => {
+    setIsLoading(true);
+    try {
+      const response = await apiClient.post("/auth/users/", {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        password: data.password
+      });
+      console.log(response);
+    } catch ( error ) {
+      setRegisterErrors(error.response?.data);
+      // console.log(error.response.data);
+      // console.log(error.response.data.email[0]);
+      // console.log(error.response.data.password[0]);
+    } finally {
+      setIsLoading(false);
+    }
+  }
   
 
   // For Login
@@ -60,6 +85,8 @@ const useAuth = () => {
     loginUser,
     loginError,
     isLoading,
+    registerUser,
+    registerErrors,
   }
 
 }

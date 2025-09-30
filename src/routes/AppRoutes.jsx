@@ -5,6 +5,7 @@ import Home from "../pages/Home/Home";
 import UserLogin from "../pages/UserLogin";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../Components/PrivateRoute";
+import UserRegistration from "../pages/UserRegistration";
 
 const AppRoutes = () => {
   return (
@@ -12,7 +13,8 @@ const AppRoutes = () => {
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop />} />
-        <Route path="login" element={<UserLogin />} />
+        <Route path="sign-in" element={<UserLogin />} />
+        <Route path="sign-up" element={<UserRegistration />} />
 
         <Route 
           path="dashboard" 
