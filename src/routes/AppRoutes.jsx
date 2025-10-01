@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../Components/PrivateRoute";
 import UserRegistration from "../pages/UserRegistration";
 import ActivateAccount from "../Components/Registration/activateAccount";
+import DashboardLayout from "../pages/Layouts/DashboardLayout";
 
 const AppRoutes = () => {
   return (
@@ -18,16 +19,24 @@ const AppRoutes = () => {
         <Route path="sign-up" element={<UserRegistration />} />
 
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />
+      </Route>
 
+      <Route
+        path="dashboard"
+        element={
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
+        }
+      >
         <Route 
-          path="dashboard" 
+          index
           element = {
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            <Dashboard />
           }
         />
       </Route>
+
     </Routes>
   );
 };
