@@ -8,6 +8,7 @@ import PrivateRoute from "../Components/PrivateRoute";
 import UserRegistration from "../pages/UserRegistration";
 import ActivateAccount from "../Components/Registration/activateAccount";
 import DashboardLayout from "../pages/Layouts/DashboardLayout";
+import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
   return (
@@ -29,12 +30,8 @@ const AppRoutes = () => {
           </PrivateRoute>
         }
       >
-        <Route 
-          index
-          element = {
-            <Dashboard />
-          }
-        />
+        <Route index element={ <Dashboard /> } />
+        <Route path="profile" element={<Profile />} />
       </Route>
 
     </Routes>
