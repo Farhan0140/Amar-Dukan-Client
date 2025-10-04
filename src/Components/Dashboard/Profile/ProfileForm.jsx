@@ -52,7 +52,7 @@ const ProfileForm = ({ register, errors, isEditing }) => {
           type="text"
           className="input input-bordered bg-base-200 w-full"
           disabled={!isEditing}
-          {...register("phone_number")}
+          {...register("phone")}
         />
       </div>
     </div>

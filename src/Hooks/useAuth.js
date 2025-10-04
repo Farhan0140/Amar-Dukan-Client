@@ -48,7 +48,10 @@ const useAuth = () => {
         address: data.address,
         password: data.password
       });
-      return {success: true, message: "Sign-Up successfully Complete,\nPlease Check your mail to Confirm registration"};
+      return {
+        success: true,
+        message: "Sign-Up successfully Complete,\nPlease Check your mail to Confirm registration"
+      };
     
     } catch ( error ) {
       // if( error.response && error.response.data ) {
@@ -87,6 +90,45 @@ const useAuth = () => {
     localStorage.removeItem("authTokens");
   }
 
+
+  // For Update Information 
+  const updateUserProfile = async (data) => {
+
+    try {
+      await apiClient.put("/auth/users/me", data, {
+        headers: {Authorization: `JWT ${authToken?.access}`}
+      })
+      return {
+        success: true,
+        message: "Profile Updated Successfully",
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `Something want wrong,, ${error?.response.data.detail}`
+      }
+    }
+  }
+
+  // For Change Password 
+  const changePassword = async (data) => {
+    try {
+      await apiClient.post("/auth/users/set_password/", data, {
+        headers: {Authorization: `JWT ${authToken?.access}`}
+      });
+
+      return {
+        success: true,
+        message: "Password Changed Successfully",
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `Something want wrong,, ${error?.response.data.detail}`
+      }
+    }
+  }
+
   return {
     user,
     loginUser,
@@ -94,6 +136,8 @@ const useAuth = () => {
     isLoading,
     registerUser,
     logoutUser,
+    updateUserProfile,
+    changePassword,
   }
 
 }
