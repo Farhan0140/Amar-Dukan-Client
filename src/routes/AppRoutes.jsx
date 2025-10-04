@@ -9,6 +9,7 @@ import UserRegistration from "../pages/UserRegistration";
 import ActivateAccount from "../Components/Registration/activateAccount";
 import DashboardLayout from "../pages/Layouts/DashboardLayout";
 import Profile from "../pages/Profile";
+import ProductDetail from "../pages/ProductDetail";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,8 @@ const AppRoutes = () => {
         <Route path="sign-up" element={<UserRegistration />} />
 
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />
+
+        <Route path="shop/:id" element={<ProductDetail />} />
       </Route>
 
       <Route
