@@ -9,21 +9,53 @@ const useCart = () => {
   }
 
   const [authToken] = useState( getToken() );
+  const [cart, setCart] = useState(null);
+  const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
 
   // Create a New Cart
-  const CreateCart = async () => {
+  const CreateOrGetCart = async () => {
     try {
       const response = await apiClient.post("/api/v1/carts/", {}, {
         headers: {Authorization: `JWT ${authToken?.access}`}
       });
-      console.log(response.data);
+      
+      setCart(response.data);
+      if (!cartId) {
+        setCartId(response.data.id);
+        localStorage.setItem("cartId", response.data.id);
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
+
+  // Adding Items to cart 
+  const AddCartItem = async (product_id, quantity) => {
+    if (!cart) {
+      await CreateOrGetCart();
+    }
+
+    try {
+      await apiClient.post(`/api/v1/carts/${cartId}/items/`, 
+        {product_id, quantity},
+        {headers: {Authorization: `JWT ${authToken?.access}`}}
+      )
+
+      return {success: true, message: "Successfully added to cart"}
+    } catch (error) {
+      console.log("From Add Items To Cart", error);
+      return {
+        success: false,
+        message: "Something Want Wrong.."
+      }
+    }
+  }
+
   return {
-    CreateCart,
+    cart,
+    CreateOrGetCart,
+    AddCartItem,
   }
 };
 

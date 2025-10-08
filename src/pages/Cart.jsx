@@ -1,17 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import useCartContext from "../Hooks/useCartContext";
 
 const Cart = () => {
 
-  const { CreateCart } = useCartContext()
+  const { cart, CreateOrGetCart } = useCartContext()
 
   useEffect(() => {
-    CreateCart();
+    CreateOrGetCart();
   }, [])
 
   return (
     <div>
-      <h1>This is Cart Page</h1>
+      <h1>{JSON.stringify(cart)}</h1>
     </div>
   );
 };
