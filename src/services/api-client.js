@@ -1,6 +1,8 @@
 
 import axios from "axios";
 
-export default axios.create({
+const apiClient = axios.create({
   baseURL: "https://amar-dukan.vercel.app",
 });
+
+export default apiClient;

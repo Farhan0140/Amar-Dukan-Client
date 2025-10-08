@@ -1,23 +1,15 @@
 import { useState } from "react";
-import apiClient from "../services/api-client";
+import authApiClient from "../services/auth-api-client";
 
 const useCart = () => {
-
-  const getToken = () => {
-    const token = localStorage.getItem("authTokens");
-    return token ? JSON.parse(token) : null;
-  }
-
-  const [authToken] = useState( getToken() );
+  
   const [cart, setCart] = useState(null);
   const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
 
   // Create a New Cart
   const CreateOrGetCart = async () => {
     try {
-      const response = await apiClient.post("/api/v1/carts/", {}, {
-        headers: {Authorization: `JWT ${authToken?.access}`}
-      });
+      const response = await authApiClient.post("/api/v1/carts/");
       
       setCart(response.data);
       if (!cartId) {
@@ -37,9 +29,8 @@ const useCart = () => {
     }
 
     try {
-      await apiClient.post(`/api/v1/carts/${cartId}/items/`, 
-        {product_id, quantity},
-        {headers: {Authorization: `JWT ${authToken?.access}`}}
+      await authApiClient.post(`/api/v1/carts/${cartId}/items/`, 
+        {product_id, quantity}
       )
 
       return {success: true, message: "Successfully added to cart"}
