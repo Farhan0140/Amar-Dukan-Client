@@ -37,7 +37,7 @@ const UserLogin = () => {
         <div className="card-body">
           <h2 className="card-title text-2xl font-normal font-biscotti">Sign in</h2>
           {
-            loginError.length > 0 ? 
+            loginError ? 
             (<span className="text-red-500 block py-1">{loginError} <br /> Please Try again </span>) :
             (<p className="text-base-content/70">Enter your email and password to access your account </p>)
           }

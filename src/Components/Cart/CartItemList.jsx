@@ -1,6 +1,6 @@
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const CartItemList = ({ cartItems, handleUpdateQuantity, isLoading }) => {
+const CartItemList = ({ cartItems, handleUpdateQuantity, deleteCartItem, isLoading }) => {
 
   if(isLoading) {
     return (
@@ -43,7 +43,7 @@ const CartItemList = ({ cartItems, handleUpdateQuantity, isLoading }) => {
                     <div className="flex items-center join">
                       <button 
                         className="btn btn-xs btn-outline join-item"
-                        onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => handleUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}
                       > - </button>
                       <input
                         type="number"
@@ -63,6 +63,7 @@ const CartItemList = ({ cartItems, handleUpdateQuantity, isLoading }) => {
                   <td>
                     <button
                       className="btn btn-ghost btn-xs btn-circle"
+                      onClick={() => deleteCartItem(item.id)}
                     >
                       <FaRegTrashAlt className="h-4 w-4" />
                     </button>

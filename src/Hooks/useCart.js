@@ -72,11 +72,28 @@ const useCart = () => {
     [cartId]
   )
 
+
+  // Delete Item From Cart
+  const deleteCartItem = async (itemId) => {
+    try {
+      const response = await authApiClient.delete(`/api/v1/carts/${cartId}/items/${itemId}/`);
+
+      if( response ) {
+        return {success: true, message: "Item Deleted Successfully"}
+      } else {
+        return {success: false, message: "Something Want Wrong"}
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     cart,
     CreateOrGetCart,
     AddCartItem,
     updateCartItemQuantity,
+    deleteCartItem,
     isLoading,
   }
 };
