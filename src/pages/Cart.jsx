@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import useCartContext from "../Hooks/useCartContext";
 import CartItemList from "../Components/Cart/CartItemList";
+import CartSummary from "../Components/Cart/CartSummary";
 
 const Cart = () => {
 
@@ -21,9 +22,26 @@ const Cart = () => {
 
     const copyCart = localCart;
 
-    setLocalCart((previousLocalCart) => ({
-      ...previousLocalCart, items: previousLocalCart.items.map(item => item.id === itemId ? {...item, quantity: newQuantity}: item)
-    }))
+    setLocalCart((previousLocalCart) => {
+      const updateItems = previousLocalCart.items.map((item) => 
+        item.id === itemId 
+        ? {
+          ...item,
+          quantity: newQuantity,
+          total_price: item?.product.price * newQuantity,
+        }
+        : item
+      )
+
+      return {
+        ...previousLocalCart,
+        items: updateItems,
+        total_price: updateItems.reduce(
+          (sum, item) => sum + item.total_price,
+          0
+        ),
+      }
+    })
 
     const response = await updateCartItemQuantity(itemId, newQuantity);
 
@@ -40,9 +58,17 @@ const Cart = () => {
       const response = await deleteCartItem(itemId);
 
       if (response.success) {
-        setLocalCart((previousLocalCart) => (
-          {...previousLocalCart, items: previousLocalCart.items.filter(item => item.id != itemId)}
-        ));
+        setLocalCart((previousLocalCart) => {
+          const updateItems = previousLocalCart.items.filter(item => item.id != itemId);
+
+          return {
+            ...previousLocalCart, 
+            items: updateItems,
+            total_price: updateItems.reduce(
+              (sum, item) => sum + item.total_price, 0
+            ),
+          };
+        });
         console.log(response.message);
       } else {
         console.log(response.message);
@@ -53,16 +79,23 @@ const Cart = () => {
   }
 
   return (
-    <div className="flex justify-between">
-      <div>
-        <CartItemList 
-          cartItems={localCart?.items || []} 
-          handleUpdateQuantity={handleUpdateQuantity} 
-          deleteCartItem={handleDeleteItem} 
-          isLoading={isLoading}
-        />
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <CartItemList 
+            cartItems={localCart?.items || []} 
+            handleUpdateQuantity={handleUpdateQuantity} 
+            deleteCartItem={handleDeleteItem} 
+            isLoading={isLoading}
+          />
+        </div>
+        <div>
+          <CartSummary 
+            totalPrice={localCart?.total_price || 0}
+            itemCount={localCart?.items.length || 0}
+          />
+        </div>
       </div>
-      <div></div>
     </div>
   );
 };

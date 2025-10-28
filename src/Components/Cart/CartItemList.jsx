@@ -59,7 +59,7 @@ const CartItemList = ({ cartItems, handleUpdateQuantity, deleteCartItem, isLoadi
                     </div>
                   </td>
 
-                  <td className="text-right font-medium">{item.total_price}</td>
+                  <td className="text-right font-medium">{item.total_price.toFixed(2)}</td>
                   <td>
                     <button
                       className="btn btn-ghost btn-xs btn-circle"

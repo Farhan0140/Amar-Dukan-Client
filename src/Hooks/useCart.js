@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import authApiClient from "../services/auth-api-client";
 
 const useCart = () => {
@@ -26,7 +26,15 @@ const useCart = () => {
       }
     },
     [cartId]
-  )
+  );
+
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      await CreateOrGetCart();
+      setIsLoading(false);
+    })()
+  }, [CreateOrGetCart])
 
 
   // Adding Items to cart 
